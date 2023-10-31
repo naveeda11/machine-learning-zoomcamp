@@ -1,10 +1,16 @@
 import pickle
 from fastapi import FastAPI
 from pydantic import BaseModel
+from xgboost import XGBClassifier
+
 import json
 app = FastAPI()
-with open("model.bin", "rb") as f_in:
-        dv, model = pickle.load(f_in)
+with open("dv.bin", "rb") as f_in:
+    dv = pickle.load(f_in)
+
+# Load model from file
+model = XGBClassifier()
+model.load_model('xgb_model.json')
 
 class Customer(BaseModel):
     hotel: str
