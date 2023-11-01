@@ -12,3 +12,23 @@ predict.py - This is the file that will run on the FastAPI server and serve the 
 The environment, isolation was done using pipenv
 
 Deployment is done using GCS and Google cloud run
+
+### Local Deployment
+
+To run FastAPI locally, 
+
+uvicorn predict:app --reload
+
+Then use predict_test.ipynb to test this out 
+
+### GCS deployment
+This is done using Google cloud run and you need to install the Google Cloud SDK https://cloud.google.com/sdk/docs/install
+
+export TAG="gcr.io/<my google project id>/midterm"
+docker build -t $TAG
+gcloud builds submit --tag $TAG
+gcloud run deploy midterm --image $TAG --platform managed --region us-central1 --allow-unauthenticated
+
+reference: https://github.com/sekR4/FastAPI-on-Google-Cloud-Run
+
+
